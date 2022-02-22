@@ -1,4 +1,4 @@
-const { BlobClient } = require('@azure/storage-blob')
+
 var express = require('express')
 
 require('dotenv/config')
@@ -8,26 +8,35 @@ require('dotenv/config')
 
 var app = express()
 var PORT = 3000
-var azure = require('azure-storage');
-var azureStorage  =  require('@azure/storage-blob')
 
 
 
+const containerName="appfiles"
 app.get("/",(req,res)=>{
-    var blobSvc = azure.createBlobService(process.env.AZURE_CONNECTION_STRING);
-    blobSvc.getContainerAcl("appfiles",()=>{
-        console.log("Container connected!")
-    })
-    blobSvc.createBlockBlobFromLocalFile('appfiles', 'myblob', 'C:\Users\91955\Documents\GitHub\Data-Share\express-backend\package.json', function(error, result, response){
-        if(!error){
-          // file uploaded
-          console.log("error occured+${error}");
-        }
-        else{
-            
-            console.log("Successfully uploaded");
-        }
-      });
+    const { DefaultAzureCredential } = require("@azure/identity");
+    const { BlobServiceClient } = require("@azure/storage-blob");
+    
+    const account = "miniproject5c4";
+    const defaultAzureCredential = new DefaultAzureCredential();
+    
+    const blobServiceClient = new BlobServiceClient(
+      `https://${account}.blob.core.windows.net`,
+      defaultAzureCredential
+    );
+    
+    const containerName = "<container name>";
+    
+    async function main() {
+      const containerClient = blobServiceClient.getContainerClient(containerName);
+    
+      const content = "Hello world!";
+      const blobName = "newblob" + new Date().getTime();
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+      const uploadBlobResponse = await blockBlobClient.upload(content, content.length);
+      console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);
+    }
+    main()
+    
     res.send("Get endpoint is fired")
 })
 app.listen(PORT,()=>{
