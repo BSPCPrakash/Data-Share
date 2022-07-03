@@ -59,8 +59,8 @@ const  FileUpload=()=>{
 const uploadFile=async()=>{
   console.log(deviceId);
             const access = new Credentials({
-                accessKeyId: "AKIARW6H7ZMAMLIBQAF3",
-                secretAccessKey: "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",
+                accessKeyId: "",
+                secretAccessKey: "",
             });
             const s3 = new S3({
               credentials: access,
