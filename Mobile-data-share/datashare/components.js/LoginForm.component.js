@@ -9,7 +9,7 @@ const LoginForm = ({navigation}) => {
   const login=async()=>{
          const data = {
            username : text,
-           password:numberz 
+           password:number 
          }
         
           await axios.post('http://192.168.43.247:7071/api/AuthenticationFunction',

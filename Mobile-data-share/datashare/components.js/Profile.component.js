@@ -1,5 +1,5 @@
 import React from "react";
-import {View,SafeAreaView,Text,Image,Button} from "react-native";
+import {View,SafeAreaView,StyleSheet,Text,Image,Button} from "react-native";
 import LoginForm from "./LoginForm.component";
 import User from "./UserData.js"
 const Profile=({navigation,data})=> {
